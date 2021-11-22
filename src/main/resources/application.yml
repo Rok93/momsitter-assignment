@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  datasource:
+    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/momsitter
+    url: jdbc:h2:mem:~/inmemory-momsitter;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+jwt:
+  secreteKey: momsitter-jwt-secretKey
+
