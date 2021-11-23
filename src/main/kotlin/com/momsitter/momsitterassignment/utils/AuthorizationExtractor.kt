@@ -12,7 +12,7 @@ class AuthorizationExtractor {
             val headers = httpServletRequest.getHeaders(HttpHeaders.AUTHORIZATION)
             while (headers.hasMoreElements()) {
                 val value = headers.nextElement()
-                if (value.lowercase().startsWith(BEARER)) {
+                if (value.startsWith(BEARER)) {
                     return value.substring(BEARER.length).trim()
                 }
             }

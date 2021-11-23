@@ -1,18 +1,19 @@
 package com.momsitter.momsitterassignment.domain
 
 import support.BaseEntity
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Embedded
+import javax.persistence.Entity
+import javax.persistence.Lob
 
 @Entity
 class Sitter(
     @Embedded
-    val information: SitterInformation,
+    val careAgeGroup: CareAgeGroup,
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    val member: Member,
+    @Lob
+    @Column(nullable = false)
+    val bio: String = "",
 
-    id: Long
-) : BaseEntity(id) {
-
-}
+    id: Long = 0L
+) : BaseEntity(id)
