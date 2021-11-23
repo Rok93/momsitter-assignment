@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class AuthenticationInterceptor(
     private val authenticationService: AuthenticationService
-) : HandlerInterceptor{
+) : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         if (HttpMethod.OPTIONS.matches(request.method)) {
-            return true;
+            return true
         }
 
         val token = AuthorizationExtractor.extract(request)
         authenticationService.validateToken(token)
-        return true;
+        return true
     }
 }

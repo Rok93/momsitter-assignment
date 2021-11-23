@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass
 @MappedSuperclass
 abstract class BaseEntity( // 생성시간 정보는 알고 있으면 좋지 않을까...?
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L,
 ){
     override fun equals(other: Any?): Boolean {

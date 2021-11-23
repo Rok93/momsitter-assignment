@@ -15,7 +15,7 @@ class SitterAuthenticationInterceptor(
 ) : HandlerInterceptor {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         if (HttpMethod.OPTIONS.matches(request.method)) {
-            return true;
+            return true
         }
 
         val token = AuthorizationExtractor.extract(request)

@@ -5,17 +5,16 @@ import javax.persistence.*
 
 @Entity
 class Parent(
-    @Embedded
-    val information: ParentInformation,
+    @Lob
+    @Column(nullable = false)
+    val requestInformation: String = "",
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    val member: Member,
+    @OneToMany(mappedBy = "parent", cascade = [CascadeType.PERSIST, CascadeType.REMOVE], orphanRemoval = true)
+    val children: MutableList<Child> = mutableListOf(),
 
-    id: Long
+    id: Long = 0L
 ) : BaseEntity(id) {
-    val childrenInfo
-        get() = information.childrenInfo
-    val requestContent
-        get() = information.requestContent
+    fun addChild(child: Child) {
+        children.add(child)
+    }
 }

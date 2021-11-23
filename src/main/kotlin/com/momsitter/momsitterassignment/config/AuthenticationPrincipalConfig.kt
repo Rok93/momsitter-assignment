@@ -16,8 +16,8 @@ class AuthenticationPrincipalConfig(
     override fun addInterceptors(registry: InterceptorRegistry) {
         //("로그인을 강제할 곳과 아닌 곳을 분리하기!")
         registry.addInterceptor(authenticationInterceptor)
-            .excludePathPatterns("/**", "/api/login")
-            .addPathPatterns("/api/**")
+            .excludePathPatterns("/api/members/login", "/api/members/signup")
+            .addPathPatterns("/api/members/**")
 
         registry.addInterceptor(parentAuthenticationInterceptor)
             .addPathPatterns("/api/parents/**")
