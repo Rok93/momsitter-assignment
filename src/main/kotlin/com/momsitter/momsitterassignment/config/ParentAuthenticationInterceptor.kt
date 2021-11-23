@@ -15,6 +15,7 @@ class ParentAuthenticationInterceptor(
     private val authenticationService: AuthenticationService
 ) : HandlerInterceptor {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
+        println("parent interceptor 동작!")
         if (HttpMethod.OPTIONS.matches(request.method)) {
             return true;
         }
@@ -22,5 +23,15 @@ class ParentAuthenticationInterceptor(
         val token = AuthorizationExtractor.extract(request)
         authenticationService.validateRoleByToken(token, Role.PARENT)
         return true
+    }
+
+    override fun afterCompletion(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        handler: Any,
+        ex: Exception?
+    ) {
+        super.afterCompletion(request, response, handler, ex)
+        println("parent interceptor 종료!")
     }
 }

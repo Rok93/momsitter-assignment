@@ -122,7 +122,7 @@ internal class MemberRestControllerTest : RestControllerTest() {
             .andExpect(content().json(objectMapper.writeValueAsString(ApiResponse.success(response))))
             .andDo(
                 document(
-                    "detail login member information",
+                    "member- find login member detail information",
                     requestHeaders(
                         headerWithName(HttpHeaders.AUTHORIZATION).description("인가 헤더 키")
                     ),
@@ -142,7 +142,7 @@ internal class MemberRestControllerTest : RestControllerTest() {
 
     @DisplayName("로그인한 회원의 정보를 수정한다")
     @Test
-    internal fun testㅕpdate() {
+    internal fun testUpdate() {
         //given
         val token = "loginToken"
         val member = createMember(id = 1L)
@@ -164,7 +164,7 @@ internal class MemberRestControllerTest : RestControllerTest() {
             .andExpect(status().isNoContent)
             .andDo(
                 document(
-                    "update login member information",
+                    "member-update information",
                     requestHeaders(
                         headerWithName(HttpHeaders.AUTHORIZATION).description("인가 헤더 키")
                     ),
