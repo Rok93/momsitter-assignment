@@ -6,7 +6,9 @@ import com.momsitter.momsitterassignment.domain.Gender
 import com.momsitter.momsitterassignment.fixture.createMember
 import com.momsitter.momsitterassignment.ui.dto.*
 import com.ninjasquad.springmockk.MockkBean
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -15,10 +17,10 @@ import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
 import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
 
 @WebMvcTest(controllers = [MemberRestController::class])
@@ -133,6 +135,45 @@ internal class MemberRestControllerTest : RestControllerTest() {
                         fieldWithPath("body.accountId").description("회원 아이디"),
                         fieldWithPath("body.email").description("회원 이메일"),
                         fieldWithPath("body.role").description("회원이 가진 권한들"),
+                    )
+                )
+            )
+    }
+
+    @DisplayName("로그인한 회원의 정보를 수정한다")
+    @Test
+    internal fun testㅕpdate() {
+        //given
+        val token = "loginToken"
+        val member = createMember(id = 1L)
+        val request = UpdateMemberRequest(
+            LocalDate.of(1990, 1, 1), Gender.MALE,
+            "newPassword!", "newPassword!", "changed@email.com"
+        )
+
+        validInterceptorAndArgumentResolverMocking(member)
+        every { memberService.update(member.id, request) } just Runs
+
+        //when //then
+        mockMvc.perform(
+            put("/api/members/me")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andExpect(status().isNoContent)
+            .andDo(
+                document(
+                    "update login member information",
+                    requestHeaders(
+                        headerWithName(HttpHeaders.AUTHORIZATION).description("인가 헤더 키")
+                    ),
+                    requestFields(
+                        fieldWithPath("birth").description("수정할 생년월일"),
+                        fieldWithPath("gender").description("수정할 성별"),
+                        fieldWithPath("password").description("수정할 비밀번호"),
+                        fieldWithPath("confirmPassword").description("확정 수정 비밀번호"),
+                        fieldWithPath("email").description("수정할 이메일")
                     )
                 )
             )

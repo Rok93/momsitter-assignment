@@ -61,7 +61,7 @@ data class LoginRequest(
 
 data class TokenResponse(val token: String)
 
-class UpdateMemberRequest(
+data class UpdateMemberRequest(
     @field: NotNull(message = "생년월일을 입력해주세요.")
     val birth: LocalDate,
     @field: NotNull(message = "이름은 null을 허용하지 않습니다.")
@@ -74,6 +74,4 @@ class UpdateMemberRequest(
     val confirmPassword: String,
     @field: Email(message = "올바른 이메일 형식이 아닙니다.")
     val email: String
-){
-
-}
+)
