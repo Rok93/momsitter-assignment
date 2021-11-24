@@ -9,7 +9,7 @@ class Parent(
     @Column(nullable = false)
     val requestInformation: String = "",
 
-    @OneToMany(mappedBy = "parent", cascade = [CascadeType.PERSIST, CascadeType.REMOVE], orphanRemoval = true)
+    @ElementCollection(fetch = FetchType.EAGER) // 여기 어떻게 해야할까...?
     val children: MutableList<Child> = mutableListOf(),
 
     id: Long = 0L

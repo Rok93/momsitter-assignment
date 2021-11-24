@@ -14,8 +14,8 @@ class DataLoader(
         val parent1 = Parent(
             requestInformation = "맞벌이 부부입니다. 24시간 상시 거주하면서 애기들 돌봐줄 수 있는 맘시터를 원합니다.",
         ).apply {
-            addChild(createChild(this, 6, 2016, 7, 12, Gender.MALE, "윌리엄 해밍턴"))
-            addChild(createChild(this, 5, 2017, 11, 8, Gender.MALE, "벤틀리 해밍턴"))
+            addChild(createChild(6, 2016, 7, 12, Gender.MALE, "윌리엄 해밍턴"))
+            addChild(createChild(5, 2017, 11, 8, Gender.MALE, "벤틀리 해밍턴"))
         }.also { member1.registerParent(it) }
         memberRepository.save(member1)
 
@@ -24,7 +24,7 @@ class DataLoader(
             requestInformation = "아내가 모델이라 다이어트식 밖에 못합니다... 우리 사랑이한테 맛잇는 요리 해주실 수 있는 맘시터 구합니다.",
         ).apply {
             addChild(
-                createChild(this, 11, 2011, 10, 24, Gender.FEMALE, "추사랑")
+                createChild(11, 2011, 10, 24, Gender.FEMALE, "추사랑")
             )
         }.also { member2.registerParent(it) }
         memberRepository.save(member2)
@@ -59,12 +59,11 @@ class DataLoader(
     ) = Member(name, LocalDate.of(year, month, dayOfMonth), gender, accountId, password, email)
 
     private fun createChild(
-        parent: Parent,
         age: Int,
         year: Int,
         month: Int,
         dayOfMonth: Int,
         gender: Gender,
         name: String,
-    ) = Child(parent, Age(age), LocalDate.of(year, month, dayOfMonth), gender, name)
+    ) = Child(Age(age), LocalDate.of(year, month, dayOfMonth), gender, name)
 }

@@ -1,17 +1,13 @@
 package com.momsitter.momsitterassignment.domain
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import support.BaseEntity
 import java.time.LocalDate
 import javax.persistence.*
 
-@Entity
-class Child(
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    val parent: Parent,
-
+@Embeddable
+data class Child(
     @Embedded
+    @AttributeOverride(name = "value", column = Column(name = "age", nullable = false))
     val age: Age,
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyyMMdd")
@@ -26,7 +22,5 @@ class Child(
     val name: String,
 
     @Column(nullable = false)
-    val note: String = "",
-
-    id: Long = 0L
-) : BaseEntity(id)
+    val note: String = ""
+)
