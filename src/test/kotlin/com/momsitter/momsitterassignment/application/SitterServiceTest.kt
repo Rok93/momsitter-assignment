@@ -26,11 +26,6 @@ internal class SitterServiceTest {
 
     private lateinit var member: Member
 
-    @BeforeEach
-    internal fun setUp() {
-        member = memberRepository.save(createMember())
-    }
-
     @DisplayName("기존 회원이 시터회원으로 등록하는 기능")
     @Test
     internal fun testRegisterSitter() {
@@ -47,6 +42,11 @@ internal class SitterServiceTest {
         assertThat(findMember.isSitter()).isTrue
         assertThat(findMember.isParent()).isFalse
         assertThat(response.id).isEqualTo(findMember.sitter!!.id)
+    }
+
+    @BeforeEach
+    internal fun setUp() {
+        member = memberRepository.save(createMember())
     }
 
     private fun flushAndClear() {

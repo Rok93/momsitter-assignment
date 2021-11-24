@@ -1,7 +1,6 @@
 package com.momsitter.momsitterassignment.ui
 
 import com.momsitter.momsitterassignment.application.SitterService
-import com.momsitter.momsitterassignment.ui.dto.RegisterParentRequest
 import com.momsitter.momsitterassignment.ui.dto.RegisterSitterRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
