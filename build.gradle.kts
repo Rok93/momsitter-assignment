@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.0"
+    id("org.springframework.boot") version "2.5.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.asciidoctor.convert") version "2.4.0"
     kotlin("jvm") version "1.6.0"
@@ -24,6 +24,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("mysql:mysql-connector-java:8.0.22")
     runtimeOnly("com.h2database:h2")
     compileOnly("io.jsonwebtoken:jjwt-api:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
@@ -33,12 +34,8 @@ dependencies {
         exclude(group = "org.mockito")
     }
     testImplementation("com.ninja-squad:springmockk:2.0.3")
-    asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-}
-
-val snippetsDir by extra {
-    file("build/generated-snippets")
 }
 
 tasks.withType<KotlinCompile> {
@@ -54,17 +51,4 @@ tasks.withType<Test> {
 
 tasks.test {
     useJUnitPlatform()
-    outputs.dir(snippetsDir)
-}
-
-tasks.asciidoctor {
-    inputs.dir(snippetsDir)
-    dependsOn(tasks.test)
-}
-
-tasks.bootJar {
-    dependsOn(tasks.asciidoctor)
-    from("$snippetsDir/html5") {
-        into("static/docs")
-    }
 }

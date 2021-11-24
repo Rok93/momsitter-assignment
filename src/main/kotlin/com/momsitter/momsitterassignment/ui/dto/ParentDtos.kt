@@ -2,17 +2,29 @@ package com.momsitter.momsitterassignment.ui.dto
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.momsitter.momsitterassignment.domain.Age
-import com.momsitter.momsitterassignment.domain.Child
+import com.momsitter.momsitterassignment.domain.parent.Child
 import com.momsitter.momsitterassignment.domain.Gender
-import com.momsitter.momsitterassignment.domain.Parent
+import com.momsitter.momsitterassignment.domain.parent.Parent
 import java.time.LocalDate
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 data class RegisterParentRequest(
     @field: NotNull(message = "요청 정보는 null일 수 없습니다. ")
     val requestInformation: String = "",
 
+    @field:Size(min = 1, message = "최소 1명이상의 아이를 등록해야합니다.")
+    val children: List<ChildData> = emptyList()
+) {
+    fun toEntity(): Parent = Parent(requestInformation, children.map { it.toChild() }.toMutableList())
+}
+
+data class UpdateParentRequest(
+    @field: NotNull(message = "요청 정보는 null일 수 없습니다. ")
+    val requestInformation: String = "",
+
+    @field:Size(min = 1, message = "최소 1명이상의 아이를 등록해야합니다.")
     val children: List<ChildData> = emptyList()
 ) {
     fun toEntity(): Parent = Parent(requestInformation, children.map { it.toChild() }.toMutableList())

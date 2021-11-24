@@ -1,10 +1,13 @@
 package com.momsitter.momsitterassignment.ui
 
 import com.momsitter.momsitterassignment.application.ParentService
+import com.momsitter.momsitterassignment.exception.UnRegisteredParentException
 import com.momsitter.momsitterassignment.fixture.createChildData
 import com.momsitter.momsitterassignment.fixture.createMember
+import com.momsitter.momsitterassignment.fixture.createParent
 import com.momsitter.momsitterassignment.ui.dto.RegisterParentRequest
 import com.momsitter.momsitterassignment.ui.dto.RegisterParentResponse
+import com.momsitter.momsitterassignment.ui.dto.UpdateParentRequest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.Runs
 import io.mockk.every
@@ -14,11 +17,8 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.restdocs.headers.HeaderDocumentation.*
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
-import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
-import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -41,35 +41,62 @@ internal class ParentRestControllerTest : RestControllerTest() {
         every { parentService.register(member.id, request) } returns response
 
         //when //then
-        val writeValueAsString = objectMapper.writeValueAsString(request)
-
         mockMvc.perform(
             post("/api/parents")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(writeValueAsString)
+                .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isCreated)
             .andExpect(header().exists("location"))
             .andExpect(header().stringValues("Location", "/api/parents/${response.id}"))
-            .andDo(
-                document(
-                    "member-register sitter",
-                    requestHeaders(
-                        headerWithName(HttpHeaders.AUTHORIZATION).description("인가 헤더 키")
-                    ),
-                    requestFields(
-                        fieldWithPath("requestInformation").description("요청 사항"),
-                        fieldWithPath("children[].age").description("아기 나이"),
-                        fieldWithPath("children[].birth").description("아기 생년월일"),
-                        fieldWithPath("children[].gender").description("아기 성별"),
-                        fieldWithPath("children[].name").description("아기 이름"),
-                        fieldWithPath("children[].note").description("아기 특이사항 (ex. 아토피 등의 질병 여부)"),
-                    ),
-                    responseHeaders(
-                        headerWithName("Location").description("생선된 부모회원을 조회할 수 있는 URI 주소")
-                    )
-                )
-            )
+    }
+
+    @DisplayName("회원이 자신의 부모정보를 수정한다")
+    @Test
+    fun testUpdateParentInfo() {
+        //given
+        val member = createMember(id = 1L).apply {
+            createParent(id = 1L)
+        }
+        val token = "loginToken"
+        val request = UpdateParentRequest("잘 부탁드립니다", listOf(createChildData()))
+
+        every { authenticationService.validateRoleByToken(token, any()) } just Runs
+        every { parentService.update(member.id, request) } just Runs
+
+        validInterceptorAndArgumentResolverMocking(member)
+
+        //when //then
+        mockMvc.perform(
+            put("/api/parents")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andExpect(status().isNoContent)
+    }
+
+    @DisplayName("부모회원이 아닌 회원이 자신의 부모정보를 수정하려고하면 예외가 발생한다")
+    @Test
+    fun testUpdateParentInfoIfLoginUserNotRegisteredParentMember() {
+        //given
+        val notParentMember = createMember(id = 1L)
+        val token = "loginToken"
+        val request = UpdateParentRequest("잘 부탁드립니다", listOf(createChildData()))
+
+        every { authenticationService.validateRoleByToken(token, any()) } just Runs
+        every { parentService.update(notParentMember.id, request) } throws UnRegisteredParentException()
+
+        validInterceptorAndArgumentResolverMocking(notParentMember)
+
+        //when //then
+        mockMvc.perform(
+            put("/api/parents")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andExpect(status().isUnauthorized)
     }
 }

@@ -1,4 +1,4 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.member
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -12,6 +12,9 @@ interface MemberRepository : JpaRepository<Member, Long> {
 
     fun existsByAccountId(accountId: String): Boolean
 
-    @Query("select m from Member m join fetch m.roles join fetch m.parent join fetch m.sitter")
-    fun findByIdWithParentAndSitter(id: Long): Member?
+    @Query("select m from Member m join fetch m.roles join fetch m.parent")
+    fun findByIdWithParent(id: Long): Member?
+
+    @Query("select m from Member m join fetch m.roles join fetch m.sitter")
+    fun findByIdWithSitter(id: Long): Member?
 }

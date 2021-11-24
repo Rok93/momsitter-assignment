@@ -1,5 +1,9 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.member
 
+import com.momsitter.momsitterassignment.domain.parent.Parent
+import com.momsitter.momsitterassignment.domain.sitter.CareAgeGroup
+import com.momsitter.momsitterassignment.domain.sitter.Sitter
+import com.momsitter.momsitterassignment.exception.AlreadyRegisteredException
 import com.momsitter.momsitterassignment.exception.NotValidPasswordException
 import com.momsitter.momsitterassignment.fixture.createMember
 import org.assertj.core.api.Assertions.assertThat
@@ -32,7 +36,7 @@ class MemberTest {
         member.registerSitter(Sitter(CareAgeGroup(1, 10)))
 
         //when //then
-        assertThrows<IllegalStateException> { member.registerSitter(Sitter(CareAgeGroup(1, 10))) }
+        assertThrows<AlreadyRegisteredException> { member.registerSitter(Sitter(CareAgeGroup(1, 10))) }
     }
 
     @DisplayName("비밀번호가 일치하는지 확인하는 기능")

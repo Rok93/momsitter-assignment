@@ -1,8 +1,8 @@
 package com.momsitter.momsitterassignment.fixture
 
 import com.momsitter.momsitterassignment.domain.Gender
-import com.momsitter.momsitterassignment.domain.Member
-import com.momsitter.momsitterassignment.domain.Password
+import com.momsitter.momsitterassignment.domain.member.Member
+import com.momsitter.momsitterassignment.domain.member.Password
 import java.time.LocalDate
 
 fun createMember(

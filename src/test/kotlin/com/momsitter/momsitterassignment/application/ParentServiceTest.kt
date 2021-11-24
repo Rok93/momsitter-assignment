@@ -1,18 +1,18 @@
 package com.momsitter.momsitterassignment.application
 
-import com.momsitter.momsitterassignment.domain.Member
-import com.momsitter.momsitterassignment.domain.MemberRepository
-import com.momsitter.momsitterassignment.domain.ParentRepository
+import com.momsitter.momsitterassignment.domain.Gender
+import com.momsitter.momsitterassignment.domain.member.Member
+import com.momsitter.momsitterassignment.domain.member.MemberRepository
+import com.momsitter.momsitterassignment.domain.parent.ParentRepository
+import com.momsitter.momsitterassignment.exception.NotFoundMemberException
 import com.momsitter.momsitterassignment.fixture.createChildData
 import com.momsitter.momsitterassignment.fixture.createMember
+import com.momsitter.momsitterassignment.fixture.createParent
 import com.momsitter.momsitterassignment.ui.dto.RegisterParentRequest
+import com.momsitter.momsitterassignment.ui.dto.UpdateParentRequest
 import com.support.IntegrationTest
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import javax.persistence.EntityManager
@@ -41,7 +41,7 @@ internal class ParentServiceTest {
     @AfterEach
     internal fun tearDown() {
         parentRepository.deleteAll()
-        memberRepository.deleteAll() // member가 삭제되면 고아객체도 같이 삭제될텐데...? 나중에 확인해보기
+        memberRepository.deleteAll()
     }
 
     @DisplayName("기존 회원이 부모회원으로 등록하는 기능")
@@ -60,6 +60,37 @@ internal class ParentServiceTest {
         assertThat(findMember.isSitter()).isFalse
         assertThat(findMember.isParent()).isTrue
         assertThat(response.id).isEqualTo(findMember.parent!!.id)
+    }
+
+    @DisplayName("부모회원의 정보를 수정하는 기능")
+    @Test
+    fun testUpdateParentInfo() {
+        //given
+        val savedParent = parentRepository.save(createParent())
+        member.registerParent(savedParent)
+        flushAndClear()
+
+        val changedRequestInformation = "잘 부탁드립니다"
+        val changedChildren = listOf(createChildData(2, 2020, 5, 5, Gender.FEMALE, "나은이"))
+        val request = UpdateParentRequest(changedRequestInformation, changedChildren)
+
+        //when
+        parentService.update(member.id, request)
+
+        //then
+        val findParent = parentRepository.findByIdOrNull(savedParent.id)!!
+        assertThat(findParent.requestInformation).isEqualTo(changedRequestInformation)
+        assertThat(findParent.children[0]).isEqualTo(changedChildren[0].toChild())
+    }
+
+    @DisplayName("존재하지 않은 회원이 자신의 부모정보를 수정하려고하면 예외가 발생한다")
+    @Test
+    fun testUpdateParentInfoIfNotExistMember() {
+        //given
+        val request = UpdateParentRequest("잘 부탁드립니다", listOf(createChildData()))
+
+        //when //then
+        assertThrows<NotFoundMemberException> { parentService.update(100L, request) }
     }
 
     private fun flushAndClear() {

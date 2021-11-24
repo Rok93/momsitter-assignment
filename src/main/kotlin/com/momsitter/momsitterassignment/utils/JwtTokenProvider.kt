@@ -1,7 +1,7 @@
 package com.momsitter.momsitterassignment.utils
 
-import com.momsitter.momsitterassignment.domain.Member
-import com.momsitter.momsitterassignment.domain.Role
+import com.momsitter.momsitterassignment.domain.member.Member
+import com.momsitter.momsitterassignment.domain.member.Role
 import com.momsitter.momsitterassignment.ui.LoginMember
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtException

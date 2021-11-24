@@ -1,8 +1,8 @@
 package com.momsitter.momsitterassignment.ui.dto
 
 import com.momsitter.momsitterassignment.domain.Gender
-import com.momsitter.momsitterassignment.domain.Member
-import com.momsitter.momsitterassignment.domain.Role
+import com.momsitter.momsitterassignment.domain.member.Member
+import com.momsitter.momsitterassignment.domain.member.Role
 import java.time.LocalDate
 import javax.validation.constraints.*
 

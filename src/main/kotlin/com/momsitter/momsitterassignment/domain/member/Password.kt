@@ -1,4 +1,4 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.member
 
 import javax.persistence.Column
 import javax.persistence.Embeddable

@@ -1,4 +1,4 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.member
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName

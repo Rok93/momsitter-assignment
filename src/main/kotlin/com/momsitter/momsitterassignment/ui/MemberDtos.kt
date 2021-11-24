@@ -1,7 +1,7 @@
 package com.momsitter.momsitterassignment.ui
 
-import com.momsitter.momsitterassignment.domain.Member
-import com.momsitter.momsitterassignment.domain.Role
+import com.momsitter.momsitterassignment.domain.member.Member
+import com.momsitter.momsitterassignment.domain.member.Role
 
 data class LoginMember(
     val id: Long,

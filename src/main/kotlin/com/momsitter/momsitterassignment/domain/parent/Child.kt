@@ -1,6 +1,8 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.parent
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.momsitter.momsitterassignment.domain.Age
+import com.momsitter.momsitterassignment.domain.Gender
 import java.time.LocalDate
 import javax.persistence.*
 

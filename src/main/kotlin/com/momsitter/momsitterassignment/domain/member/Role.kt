@@ -1,4 +1,4 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.member
 
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonValue

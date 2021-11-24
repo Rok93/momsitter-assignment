@@ -1,10 +1,13 @@
 package com.momsitter.momsitterassignment.application
 
-import com.momsitter.momsitterassignment.domain.MemberRepository
-import com.momsitter.momsitterassignment.domain.SitterRepository
-import com.momsitter.momsitterassignment.domain.getByMemberId
+import com.momsitter.momsitterassignment.domain.member.MemberRepository
+import com.momsitter.momsitterassignment.domain.sitter.SitterRepository
+import com.momsitter.momsitterassignment.domain.member.getByMemberId
+import com.momsitter.momsitterassignment.exception.NotFoundMemberException
+import com.momsitter.momsitterassignment.exception.UnRegisteredSitterException
 import com.momsitter.momsitterassignment.ui.dto.RegisterSitterRequest
 import com.momsitter.momsitterassignment.ui.dto.RegisterSitterResponse
+import com.momsitter.momsitterassignment.ui.dto.UpdateSitterRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,12 +17,19 @@ class SitterService(
     private val sitterRepository: SitterRepository
 ) {
     @Transactional
-    fun register(id: Long, request: RegisterSitterRequest): RegisterSitterResponse {
+    fun register(memberId: Long, request: RegisterSitterRequest): RegisterSitterResponse {
         val sitter = sitterRepository.save(request.toEntity())
-        memberRepository.getByMemberId(id).apply {
+        memberRepository.getByMemberId(memberId).apply {
             registerSitter(sitter)
         }
 
         return RegisterSitterResponse(sitter.id)
+    }
+
+    @Transactional
+    fun update(memberId: Long, request: UpdateSitterRequest) {
+        val member = memberRepository.findByIdWithSitter(memberId) ?: throw NotFoundMemberException()
+        val sitter = member.sitter ?: throw UnRegisteredSitterException()
+        sitter.change(request.toEntity())
     }
 }

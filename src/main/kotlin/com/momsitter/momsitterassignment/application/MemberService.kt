@@ -1,7 +1,7 @@
 package com.momsitter.momsitterassignment.application
 
-import com.momsitter.momsitterassignment.domain.MemberRepository
-import com.momsitter.momsitterassignment.domain.getByMemberId
+import com.momsitter.momsitterassignment.domain.member.MemberRepository
+import com.momsitter.momsitterassignment.domain.member.getByMemberId
 import com.momsitter.momsitterassignment.ui.dto.MemberResponse
 import com.momsitter.momsitterassignment.ui.dto.UpdateMemberRequest
 import org.springframework.stereotype.Service
@@ -19,7 +19,7 @@ class MemberService(
     @Transactional
     fun update(id: Long, request: UpdateMemberRequest) {
         require(request.password == request.confirmPassword) { "입력한 비밀번호가 서로 일치하지 않습니다." }
-        val member = memberRepository.findByIdWithParentAndSitter(id) ?: throw NoSuchElementException("존재하지 않는 멤버입니다. id = $id")
+        val member = memberRepository.getByMemberId(id)
         member.update(request.birth, request.password, request.email, request.gender)
     }
 }

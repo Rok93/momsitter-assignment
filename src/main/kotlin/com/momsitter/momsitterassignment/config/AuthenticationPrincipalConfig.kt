@@ -9,21 +9,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 class AuthenticationPrincipalConfig(
     private val authenticationInterceptor: AuthenticationInterceptor,
-    private val authenticationArgumentResolver: AuthenticationArgumentResolver,
-    private val sitterAuthenticationInterceptor: SitterAuthenticationInterceptor,
-    private val parentAuthenticationInterceptor: ParentAuthenticationInterceptor
+    private val authenticationArgumentResolver: AuthenticationArgumentResolver
 ) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
-        //("로그인을 강제할 곳과 아닌 곳을 분리하기!")
         registry.addInterceptor(authenticationInterceptor)
-            .excludePathPatterns("/api/members/login", "/api/members/signup", "/api/parents/**")
-            .addPathPatterns("/api/members/**", "/api/parents", "/api/sitters/**")
-
-//        registry.addInterceptor(parentAuthenticationInterceptor)
-//            .addPathPatterns("/api/parents/**")
-//
-//        registry.addInterceptor(sitterAuthenticationInterceptor)
-//            .addPathPatterns("api/sitters/**")
+            .excludePathPatterns("/api/members/login", "/api/members/signup")
+            .addPathPatterns("/api/members/**", "/api/parents", "/api/sitters")
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

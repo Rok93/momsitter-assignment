@@ -1,4 +1,4 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.sitter
 
 import org.springframework.data.jpa.repository.JpaRepository
 

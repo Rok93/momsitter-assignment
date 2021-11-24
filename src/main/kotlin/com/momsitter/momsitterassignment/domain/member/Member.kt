@@ -1,6 +1,10 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.member
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.momsitter.momsitterassignment.domain.*
+import com.momsitter.momsitterassignment.domain.parent.Parent
+import com.momsitter.momsitterassignment.domain.sitter.Sitter
+import com.momsitter.momsitterassignment.exception.AlreadyRegisteredException
 import com.momsitter.momsitterassignment.exception.NotValidPasswordException
 import support.BaseEntity
 import java.time.LocalDate
@@ -44,11 +48,11 @@ class Member(
     @Enumerated(value = EnumType.STRING)
     val roles: MutableSet<Role> = mutableSetOf()
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.REMOVE], orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     var parent: Parent? = null
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST, CascadeType.REMOVE], orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sitter_id")
     var sitter: Sitter? = null
 
@@ -63,7 +67,9 @@ class Member(
     }
 
     private fun addRole(role: Role) {
-        check(!roles.contains(role)) { "이미 ${role}로 등록되었습니다." }
+        if (roles.contains(role)) {
+            throw AlreadyRegisteredException(role)
+        }
         roles.add(role)
     }
 

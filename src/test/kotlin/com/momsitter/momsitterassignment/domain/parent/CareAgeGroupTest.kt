@@ -1,5 +1,6 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.parent
 
+import com.momsitter.momsitterassignment.domain.sitter.CareAgeGroup
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

@@ -1,5 +1,6 @@
-package com.momsitter.momsitterassignment.domain
+package com.momsitter.momsitterassignment.domain.sitter
 
+import com.momsitter.momsitterassignment.domain.Age
 import javax.persistence.AttributeOverride
 import javax.persistence.Column
 import javax.persistence.Embeddable

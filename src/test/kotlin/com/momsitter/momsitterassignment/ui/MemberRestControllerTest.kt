@@ -13,11 +13,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
-import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
-import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
@@ -44,20 +40,7 @@ internal class MemberRestControllerTest : RestControllerTest() {
                 .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isOk)
-            .andExpect(content().json(objectMapper.writeValueAsString(ApiResponse.success(response))))
-            .andDo(
-                document(
-                    "member-login",
-                    requestFields(
-                        fieldWithPath("accountId").description("회원 아이디"),
-                        fieldWithPath("password").description("회원 패스워드"),
-                    ),
-                    responseFields(
-                        fieldWithPath("message").description("예외 발생시에 전달되는 메시지"),
-                        fieldWithPath("body.token").description("로그인 성공시 발급되는 토큰")
-                    )
-                )
-            )
+            .andExpect(content().json(objectMapper.writeValueAsString(CommonResponse.success(response))))
     }
 
     @DisplayName("회원가입 요청을 하여 토큰을 발급받는다 - 성공")
@@ -79,25 +62,7 @@ internal class MemberRestControllerTest : RestControllerTest() {
                 .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isOk)
-            .andExpect(content().json(objectMapper.writeValueAsString(ApiResponse.success(response))))
-            .andDo(
-                document(
-                    "member-signup",
-                    requestFields(
-                        fieldWithPath("name").description("회원 이름"),
-                        fieldWithPath("birth").description("회원 생년월일"),
-                        fieldWithPath("gender").description("회원 성별"),
-                        fieldWithPath("accountId").description("회원 아이디"),
-                        fieldWithPath("password").description("등록할 비밀번호"),
-                        fieldWithPath("confirmPassword").description("입력 비밀번호 확인"),
-                        fieldWithPath("email").description("회원 이메일 정보"),
-                    ),
-                    responseFields(
-                        fieldWithPath("message").description("예외 발생시에 전달되는 메시지"),
-                        fieldWithPath("body.token").description("로그인 성공시 발급되는 토큰")
-                    )
-                )
-            )
+            .andExpect(content().json(objectMapper.writeValueAsString(CommonResponse.success(response))))
     }
 
     @DisplayName("로그인한 회원의 상세정보를 조회한다")
@@ -116,25 +81,7 @@ internal class MemberRestControllerTest : RestControllerTest() {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $token")
         )
             .andExpect(status().isOk)
-            .andExpect(content().json(objectMapper.writeValueAsString(ApiResponse.success(response))))
-            .andDo(
-                document(
-                    "member- find login member detail information",
-                    requestHeaders(
-                        headerWithName(HttpHeaders.AUTHORIZATION).description("인가 헤더 키")
-                    ),
-                    responseFields(
-                        fieldWithPath("message").description("예외 발생시에 전달되는 메시지"),
-                        fieldWithPath("body.id").description("회원번호"),
-                        fieldWithPath("body.name").description("회원 이름"),
-                        fieldWithPath("body.birth").description("회원 생년월일"),
-                        fieldWithPath("body.gender").description("회원 성별"),
-                        fieldWithPath("body.accountId").description("회원 아이디"),
-                        fieldWithPath("body.email").description("회원 이메일"),
-                        fieldWithPath("body.role").description("회원이 가진 권한들"),
-                    )
-                )
-            )
+            .andExpect(content().json(objectMapper.writeValueAsString(CommonResponse.success(response))))
     }
 
     @DisplayName("로그인한 회원의 정보를 수정한다")
@@ -159,20 +106,5 @@ internal class MemberRestControllerTest : RestControllerTest() {
                 .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isNoContent)
-            .andDo(
-                document(
-                    "member-update information",
-                    requestHeaders(
-                        headerWithName(HttpHeaders.AUTHORIZATION).description("인가 헤더 키")
-                    ),
-                    requestFields(
-                        fieldWithPath("birth").description("수정할 생년월일"),
-                        fieldWithPath("gender").description("수정할 성별"),
-                        fieldWithPath("password").description("수정할 비밀번호"),
-                        fieldWithPath("confirmPassword").description("확정 수정 비밀번호"),
-                        fieldWithPath("email").description("수정할 이메일")
-                    )
-                )
-            )
     }
 }

@@ -1,7 +1,9 @@
 package com.momsitter.momsitterassignment.application
 
-import com.momsitter.momsitterassignment.domain.MemberRepository
-import com.momsitter.momsitterassignment.domain.Role
+import com.momsitter.momsitterassignment.domain.member.MemberRepository
+import com.momsitter.momsitterassignment.domain.member.Role
+import com.momsitter.momsitterassignment.exception.AlreadySignupMemberException
+import com.momsitter.momsitterassignment.exception.NotFoundMemberException
 import com.momsitter.momsitterassignment.exception.NotRoleAuthorizationException
 import com.momsitter.momsitterassignment.ui.LoginMember
 import com.momsitter.momsitterassignment.ui.dto.SignupMemberRequest
@@ -20,7 +22,7 @@ class AuthenticationService(
 
     fun login(accountId: String, password: String): TokenResponse {
         val findMember = memberRepository.findByAccountId(accountId)
-            ?: throw NoSuchElementException("존재하지 않는 회원입니다. accountId = $accountId")
+            ?: throw NotFoundMemberException("존재하지 않는 회원입니다. accountId = $accountId")
 
         findMember.validatePassword(password)
 
@@ -33,12 +35,17 @@ class AuthenticationService(
 
     fun validateRoleByToken(token: String, role: Role) {
         val loginMember = jwtTokenProvider.findMemberFromToken(token)
-        check(loginMember.roles.contains(role)) { NotRoleAuthorizationException() }
+        if (!loginMember.roles.contains(role)) {
+            throw NotRoleAuthorizationException(role)
+        }
     }
 
     fun generateTokenBySignup(request: SignupMemberRequest): TokenResponse {
         require(request.password == request.confirmPassword) { "입력한 비밀번호가 서로 일치하지 않습니다." }
-        check(!memberRepository.existsByAccountId(request.accountId)) { "이미 존재하는 아이디입니다.." }
+        if (!memberRepository.existsByAccountId(request.accountId)) {
+            throw AlreadySignupMemberException(request.accountId)
+        }
+
         val member = memberRepository.save(request.toEntity())
         return TokenResponse(jwtTokenProvider.createToken(member))
     }

@@ -1,7 +1,7 @@
 package com.momsitter.momsitterassignment.utils
 
-import com.momsitter.momsitterassignment.domain.Parent
-import com.momsitter.momsitterassignment.domain.Role
+import com.momsitter.momsitterassignment.domain.parent.Parent
+import com.momsitter.momsitterassignment.domain.member.Role
 import com.momsitter.momsitterassignment.fixture.createMember
 import com.support.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
