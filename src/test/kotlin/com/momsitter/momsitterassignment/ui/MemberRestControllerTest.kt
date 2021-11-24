@@ -1,6 +1,5 @@
 package com.momsitter.momsitterassignment.ui
 
-import com.momsitter.momsitterassignment.application.AuthenticationService
 import com.momsitter.momsitterassignment.application.MemberService
 import com.momsitter.momsitterassignment.domain.Gender
 import com.momsitter.momsitterassignment.fixture.createMember
@@ -25,8 +24,6 @@ import java.time.LocalDate
 
 @WebMvcTest(controllers = [MemberRestController::class])
 internal class MemberRestControllerTest : RestControllerTest() {
-    @MockkBean
-    private lateinit var authenticationService: AuthenticationService
 
     @MockkBean
     private lateinit var memberService: MemberService

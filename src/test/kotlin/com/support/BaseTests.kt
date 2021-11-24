@@ -6,7 +6,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestConstructor
+import org.springframework.transaction.annotation.Transactional
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
@@ -27,5 +29,7 @@ annotation class RepositoryTest
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
+@ActiveProfiles("test")
+@Transactional
 @SpringBootTest
 annotation class IntegrationTest

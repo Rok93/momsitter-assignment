@@ -1,14 +1,38 @@
 package com.momsitter.momsitterassignment.domain
 
+
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.JsonDeserializer
+import com.fasterxml.jackson.databind.JsonSerializer
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import javax.persistence.Access
+import javax.persistence.AccessType
 import javax.persistence.Column
 import javax.persistence.Embeddable
 
 private const val MIN_AGE = 1
 
+private class AgeDeserializer : JsonDeserializer<Age>() {
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Age = Age(p.intValue)
+}
+
+private class AgeSerializer : JsonSerializer<Age>() {
+    override fun serialize(age: Age, gen: JsonGenerator, serializers: SerializerProvider) {
+        gen.writeString(age.value.toString())
+    }
+}
+
+@JsonSerialize(using = AgeSerializer::class)
+@JsonDeserialize(using = AgeDeserializer::class)
 @Embeddable
+@Access(AccessType.FIELD)
 data class Age(
     @Column(nullable = false)
-    val value: Int = MIN_AGE
+    val value: Int
 ) {
     init {
         check(value >= MIN_AGE) { "나이는 1이상의 숫자만 가능합니다." }

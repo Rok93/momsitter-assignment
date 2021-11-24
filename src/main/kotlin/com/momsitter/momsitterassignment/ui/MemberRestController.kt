@@ -32,7 +32,7 @@ class MemberRestController(
     }
 
     @PutMapping("/me")
-    fun update(loginMember: LoginMember, @RequestBody request: UpdateMemberRequest): ResponseEntity<Any> {
+    fun update(loginMember: LoginMember, @RequestBody request: UpdateMemberRequest): ResponseEntity<Unit> {
         memberService.update(loginMember.id, request)
         return ResponseEntity.noContent().build()
     }

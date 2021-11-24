@@ -9,11 +9,11 @@ import javax.persistence.Embedded
 data class CareAgeGroup(
     @Embedded
     @AttributeOverride(name = "value", column = Column(name = "min_age"))
-    val minAge: Age = Age(),
+    val minAge: Age,
 
     @Embedded
     @AttributeOverride(name = "value", column = Column(name = "max_age"))
-    val maxAge: Age = Age()
+    val maxAge: Age
 ) {
     init {
         check(minAge <= maxAge) { "최대연령은 최소연령보다 크거나 같아야합니다." }

@@ -16,14 +16,14 @@ class AuthenticationPrincipalConfig(
     override fun addInterceptors(registry: InterceptorRegistry) {
         //("로그인을 강제할 곳과 아닌 곳을 분리하기!")
         registry.addInterceptor(authenticationInterceptor)
-            .excludePathPatterns("/api/members/login", "/api/members/signup")
-            .addPathPatterns("/api/members/**")
+            .excludePathPatterns("/api/members/login", "/api/members/signup", "/api/parents/**")
+            .addPathPatterns("/api/members/**", "/api/parents", "/api/sitters/**")
 
-        registry.addInterceptor(parentAuthenticationInterceptor)
-            .addPathPatterns("/api/parents/**")
-
-        registry.addInterceptor(sitterAuthenticationInterceptor)
-            .addPathPatterns("api/sitters/**")
+//        registry.addInterceptor(parentAuthenticationInterceptor)
+//            .addPathPatterns("/api/parents/**")
+//
+//        registry.addInterceptor(sitterAuthenticationInterceptor)
+//            .addPathPatterns("api/sitters/**")
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

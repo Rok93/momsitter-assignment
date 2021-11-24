@@ -1,6 +1,7 @@
 package com.momsitter.momsitterassignment.ui
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.momsitter.momsitterassignment.application.AuthenticationService
 import com.momsitter.momsitterassignment.config.AuthenticationArgumentResolver
 import com.momsitter.momsitterassignment.config.AuthenticationInterceptor
 import com.momsitter.momsitterassignment.domain.Member
@@ -9,7 +10,6 @@ import com.support.SliceTest
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.restdocs.RestDocumentationContextProvider
@@ -28,6 +28,9 @@ abstract class RestControllerTest {
 
     @MockkBean
     lateinit var authenticationInterceptor: AuthenticationInterceptor
+
+    @MockkBean
+    lateinit var authenticationService: AuthenticationService
 
     @Autowired
     lateinit var objectMapper: ObjectMapper
