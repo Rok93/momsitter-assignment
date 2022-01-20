@@ -83,11 +83,4 @@ subprojects {
     tasks.test {
         useJUnitPlatform()
     }
-
-    //todo: 아래의 로직을 이 하나의 코드로 변경할 수 있는지 테스트해보기!! 각 모듈들이 jar 파일로 빌드파일을 만드는지 확인하면 됌!!
-    val jar: Jar by tasks
-    val bootJar: org.springframework.boot.gradle.tasks.bundling.BootJar by tasks
-
-    bootJar.enabled = false
-    jar.enabled = true
 }
