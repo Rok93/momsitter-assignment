@@ -46,3 +46,14 @@ https://rok93.notion.site/7e3ec987c0e74f2392f1afc30abffac0
 `main.resources.sql` 디렉토리안에 
 * Schema 생성을 위한 `schema.sql` 파일
 * 초기 데이터를 위한 `initdata.sql` 파일 
+
+## 모듈 설명 
+> 모듈의 단위를 어떻게 나눌지에 대한 기준 & 지식이 없어  
+> 권용근님의 세미나 발표 영상에서 소개한 가이드를 최대한 따라보려고 하였습니다. 
+
+![image](https://user-images.githubusercontent.com/37354145/150077511-07b1324e-d7e7-4732-8f60-c640d4c75067.png)
+![image](https://user-images.githubusercontent.com/37354145/150075433-6edda5de-1f62-4ad6-afd4-d7332a0c23ea.png)
+`momsitter-assignment`: Root Project <br>
+&nbsp; ㄴ momsitter-core   <br>
+&nbsp; ㄴ momsitter-common   <br>
+&nbsp; ㄴ momsitter-api   <br>
