@@ -1,5 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.5.0")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
+    }
+}
+
 plugins {
     id("org.springframework.boot") version "2.5.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
@@ -9,12 +20,6 @@ plugins {
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
     kotlin("kapt") version kotlinVersion
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
 }
 
 java {
@@ -83,11 +88,4 @@ subprojects {
     tasks.test {
         useJUnitPlatform()
     }
-
-    //todo: 아래의 로직을 이 하나의 코드로 변경할 수 있는지 테스트해보기!! 각 모듈들이 jar 파일로 빌드파일을 만드는지 확인하면 됌!!
-    val jar: Jar by tasks
-    val bootJar: org.springframework.boot.gradle.tasks.bundling.BootJar by tasks
-
-    bootJar.enabled = false
-    jar.enabled = true
 }
