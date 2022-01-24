@@ -6,9 +6,9 @@ import com.momsitter.momsitterassignment.domain.member.Member
 import com.momsitter.momsitterassignment.domain.member.MemberRepository
 import com.momsitter.momsitterassignment.domain.sitter.CareAgeGroup
 import com.momsitter.momsitterassignment.domain.sitter.SitterRepository
-import com.momsitter.momsitterassignment.exception.NotFoundMemberException
-import com.momsitter.momsitterassignment.fixture.createMember
-import com.momsitter.momsitterassignment.fixture.createSitter
+import com.momsitter.momsitterassignment.exceptions.NotFoundMemberException
+import fixture.createMember
+import fixture.createSitter
 import com.support.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

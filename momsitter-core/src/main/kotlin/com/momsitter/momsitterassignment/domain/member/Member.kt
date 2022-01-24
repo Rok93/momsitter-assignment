@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.momsitter.momsitterassignment.domain.*
 import com.momsitter.momsitterassignment.domain.parent.Parent
 import com.momsitter.momsitterassignment.domain.sitter.Sitter
-import com.momsitter.momsitterassignment.exception.AlreadyRegisteredException
-import com.momsitter.momsitterassignment.exception.NotValidPasswordException
+import com.momsitter.momsitterassignment.exceptions.AlreadyRegisteredException
+import com.momsitter.momsitterassignment.exceptions.NotValidPasswordException
 import support.BaseEntity
 import java.time.LocalDate
 import javax.persistence.*

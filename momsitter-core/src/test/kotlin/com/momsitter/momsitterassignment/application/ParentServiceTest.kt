@@ -6,10 +6,10 @@ import com.momsitter.momsitterassignment.domain.Gender
 import com.momsitter.momsitterassignment.domain.member.Member
 import com.momsitter.momsitterassignment.domain.member.MemberRepository
 import com.momsitter.momsitterassignment.domain.parent.ParentRepository
-import com.momsitter.momsitterassignment.exception.NotFoundMemberException
-import com.momsitter.momsitterassignment.fixture.createChildData
-import com.momsitter.momsitterassignment.fixture.createMember
-import com.momsitter.momsitterassignment.fixture.createParent
+import com.momsitter.momsitterassignment.exceptions.NotFoundMemberException
+import fixture.createChildData
+import fixture.createMember
+import fixture.createParent
 import com.support.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*

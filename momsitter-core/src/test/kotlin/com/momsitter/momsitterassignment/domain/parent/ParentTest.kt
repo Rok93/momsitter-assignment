@@ -1,8 +1,8 @@
 package com.momsitter.momsitterassignment.domain.parent
 
-import com.momsitter.momsitterassignment.exception.DuplicatedChildException
-import com.momsitter.momsitterassignment.fixture.createChild
-import com.momsitter.momsitterassignment.fixture.createParent
+import com.momsitter.momsitterassignment.exceptions.DuplicatedChildException
+import fixture.createChild
+import fixture.createParent
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

@@ -1,6 +1,7 @@
 package com.momsitter.momsitterassignment
 
-import com.momsitter.momsitterassignment.domain.*
+import com.momsitter.momsitterassignment.domain.Age
+import com.momsitter.momsitterassignment.domain.Gender
 import com.momsitter.momsitterassignment.domain.member.Member
 import com.momsitter.momsitterassignment.domain.member.MemberRepository
 import com.momsitter.momsitterassignment.domain.parent.Child
@@ -70,10 +71,10 @@ class DataLoader(
     private fun createSavedParent(requestInformation: String, children: List<Child>): Parent {
         return parentRepository.save(
             Parent(
-            requestInformation = requestInformation,
-        ).apply {
-            children.forEach { addChild(it) }
-        })
+                requestInformation = requestInformation,
+            ).apply {
+                children.forEach { addChild(it) }
+            })
     }
 
     fun createMember(

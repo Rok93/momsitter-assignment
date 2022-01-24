@@ -1,6 +1,6 @@
 package com.momsitter.momsitterassignment.domain.parent
 
-import com.momsitter.momsitterassignment.exception.DuplicatedChildException
+import com.momsitter.momsitterassignment.exceptions.DuplicatedChildException
 import support.BaseEntity
 import javax.persistence.*
 

@@ -5,9 +5,9 @@ import com.momsitter.momsitterassignment.application.dto.SignupMemberRequest
 import com.momsitter.momsitterassignment.application.dto.TokenResponse
 import com.momsitter.momsitterassignment.domain.member.MemberRepository
 import com.momsitter.momsitterassignment.domain.member.Role
-import com.momsitter.momsitterassignment.exception.AlreadySignupMemberException
-import com.momsitter.momsitterassignment.exception.NotFoundMemberException
-import com.momsitter.momsitterassignment.exception.NotRoleAuthorizationException
+import com.momsitter.momsitterassignment.exceptions.AlreadySignupMemberException
+import com.momsitter.momsitterassignment.exceptions.NotFoundMemberException
+import com.momsitter.momsitterassignment.exceptions.NotRoleAuthorizationException
 import com.momsitter.momsitterassignment.utils.JwtTokenProvider
 import org.springframework.stereotype.Service
 

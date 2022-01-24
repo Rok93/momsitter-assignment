@@ -6,8 +6,8 @@ import com.momsitter.momsitterassignment.application.dto.UpdateParentRequest
 import com.momsitter.momsitterassignment.domain.member.MemberRepository
 import com.momsitter.momsitterassignment.domain.member.getByMemberId
 import com.momsitter.momsitterassignment.domain.parent.ParentRepository
-import com.momsitter.momsitterassignment.exception.NotFoundMemberException
-import com.momsitter.momsitterassignment.exception.UnRegisteredParentException
+import com.momsitter.momsitterassignment.exceptions.NotFoundMemberException
+import com.momsitter.momsitterassignment.exceptions.UnRegisteredParentException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

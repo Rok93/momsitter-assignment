@@ -3,9 +3,9 @@ package com.momsitter.momsitterassignment.domain.member
 import com.momsitter.momsitterassignment.domain.parent.Parent
 import com.momsitter.momsitterassignment.domain.sitter.CareAgeGroup
 import com.momsitter.momsitterassignment.domain.sitter.Sitter
-import com.momsitter.momsitterassignment.exception.AlreadyRegisteredException
-import com.momsitter.momsitterassignment.exception.NotValidPasswordException
-import com.momsitter.momsitterassignment.fixture.createMember
+import com.momsitter.momsitterassignment.exceptions.AlreadyRegisteredException
+import com.momsitter.momsitterassignment.exceptions.NotValidPasswordException
+import fixture.createMember
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

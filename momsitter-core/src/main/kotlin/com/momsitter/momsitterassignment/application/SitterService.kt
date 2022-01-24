@@ -6,8 +6,8 @@ import com.momsitter.momsitterassignment.application.dto.UpdateSitterRequest
 import com.momsitter.momsitterassignment.domain.member.MemberRepository
 import com.momsitter.momsitterassignment.domain.member.getByMemberId
 import com.momsitter.momsitterassignment.domain.sitter.SitterRepository
-import com.momsitter.momsitterassignment.exception.NotFoundMemberException
-import com.momsitter.momsitterassignment.exception.UnRegisteredSitterException
+import com.momsitter.momsitterassignment.exceptions.NotFoundMemberException
+import com.momsitter.momsitterassignment.exceptions.UnRegisteredSitterException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
