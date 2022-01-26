@@ -19,3 +19,14 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
+
+val jar: Jar by tasks
+val bootJar: org.springframework.boot.gradle.tasks.bundling.BootJar by tasks
+
+tasks.bootJar {
+    enabled = true
+    archiveFileName.set("momsitter-api.jar")
+    mainClass.set("com.momsitter.ApiApplicationKt")
+}
+
+jar.enabled = false

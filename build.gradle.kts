@@ -21,8 +21,7 @@ plugins {
     kotlin("plugin.jpa") version kotlinVersion
     kotlin("kapt") version kotlinVersion
 
-    id("java-library")
-    id("java-test-fixtures")
+    idea
 }
 
 java {
@@ -30,11 +29,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-tasks.jar {
+tasks.jar { // bootJar에서 꺼내다가 읽을만하게 jar 파일이
     enabled = true
 }
 
-tasks.bootJar {
+tasks.bootJar { // SpringBoot 단위로 jar 말리는 설정
     enabled = false
 }
 
