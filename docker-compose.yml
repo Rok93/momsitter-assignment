@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  application:
+    image: goodboy302/momsitter-roki:0.2
+    container_name: momsitter-api.jar
+    depends_on:
+      - database
+    ports:
+      - 8080:8080
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+      SPRING_DATASOURCE_USERNAME: sa
+
+  database:
+    image: oscarfonts/h2
+    restart: always
+    ports:
+      - 53306:3306
+    container_name: database
