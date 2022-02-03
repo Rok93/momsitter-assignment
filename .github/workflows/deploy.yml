@@ -1,0 +1,14 @@
+## todo: token들은 submodule로 변경하기
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo a Build
+        run: echo "Hello World!"
