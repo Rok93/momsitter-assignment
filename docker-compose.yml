@@ -1,10 +1,9 @@
 version: '3.7'
 
 services:
-  springboot-application:
-#    build: . SpringBoot jar 이미지로 만들어서 올리는 과정이 필요!
-    image: spring-application:0.2
-    container_name: momsitter-app.jar
+  application:
+    image: goodboy302/momsitter-roki:0.2
+    container_name: momsitter-api.jar
     depends_on:
       - database
     ports:

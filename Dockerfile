@@ -1,4 +1,4 @@
-FROM adoptopenjdk:8-jdk-hotspot
+FROM openjdk:8-jdk-alpine
 
 COPY momsitter-api/build/libs/momsitter-api.jar momsitter-app.jar
 
