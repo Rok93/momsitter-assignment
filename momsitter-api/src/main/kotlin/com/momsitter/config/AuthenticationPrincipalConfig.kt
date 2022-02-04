@@ -8,12 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 class AuthenticationPrincipalConfig(
-    private val authenticationInterceptor: AuthenticationInterceptor, // todo: Application Bean을 못 읽는데..
+    private val authenticationInterceptor: AuthenticationInterceptor,
     private val authenticationArgumentResolver: AuthenticationArgumentResolver
 ) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authenticationInterceptor)
             .excludePathPatterns("/api/members/login", "/api/members/signup")
+            .excludePathPatterns("/health")
             .addPathPatterns("/api/members/**", "/api/parents", "/api/sitters")
     }
 
