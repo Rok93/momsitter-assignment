@@ -2,7 +2,8 @@ version: '3.7'
 
 services:
   application:
-    image: goodboy302/momsitter-roki:0.2
+#    image: goodboy302/momsitter-roki:0.2
+    build: .
     container_name: momsitter-api.jar
     depends_on:
       - database
