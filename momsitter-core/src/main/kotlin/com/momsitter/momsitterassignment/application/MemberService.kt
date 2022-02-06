@@ -22,4 +22,9 @@ class MemberService(
         val member = memberRepository.getByMemberId(id)
         member.update(request.birth, request.password, request.email, request.gender)
     }
+
+    fun findAll(): List<MemberResponse> {
+        return memberRepository.findAll()
+            .map { MemberResponse(it) }
+    }
 }
