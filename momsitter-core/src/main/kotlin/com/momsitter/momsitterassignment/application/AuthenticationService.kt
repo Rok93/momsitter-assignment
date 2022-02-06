@@ -42,7 +42,7 @@ class AuthenticationService(
 
     fun generateTokenBySignup(request: SignupMemberRequest): TokenResponse {
         require(request.password == request.confirmPassword) { "입력한 비밀번호가 서로 일치하지 않습니다." }
-        if (!memberRepository.existsByAccountId(request.accountId)) {
+        if (memberRepository.existsByAccountId(request.accountId)) {
             throw AlreadySignupMemberException(request.accountId)
         }
 
